@@ -6,8 +6,8 @@ namespace Mango.Services.Auth.API.Data
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<IdentityUser>(options)
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //}
     }
 }
