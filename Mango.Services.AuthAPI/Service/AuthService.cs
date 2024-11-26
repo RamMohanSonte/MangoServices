@@ -7,9 +7,29 @@ namespace Mango.Services.AuthAPI.Service
 {
     public class AuthService(AppDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager) : IAuthService
     {
-        public Task<LoginResponseDto> Login(LoginResponseDto loginResponseDto)
+        public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
         {
-            throw new NotImplementedException();
+            var user = db.ApplicationUses.FirstOrDefault(x => x.UserName.ToLower() == loginRequestDto.Username);
+            var isValid = await userManager.CheckPasswordAsync(user, loginRequestDto.Password);
+            if (user == null || isValid==false) {
+                return new LoginResponseDto() { User = null, Token = "" };
+            }
+
+            UserDto userDto = new()
+            {
+                Email=user.Email,
+                ID  = user.Id,  
+                Name = user.Name,
+                PhoneNumber=user.PhoneNumber
+            };
+
+            LoginResponseDto loginResponseDto = new()
+            {
+                User = userDto,
+                Token=""
+            };
+
+            return loginResponseDto;
         }
 
         public async Task<string> Register(RegistrationRequestDto registrationRequestDto)
