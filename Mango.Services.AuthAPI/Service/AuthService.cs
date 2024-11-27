@@ -28,9 +28,7 @@ namespace Mango.Services.AuthAPI.Service
             if (user == null || isValid==false) {
                 return new LoginResponseDto() { User = null, Token = "" };
             }
-
             var token= jwtTokenGenerator.GenerateToken(user);
-
             UserDto userDto = new()
             {
                 Email=user.Email,
@@ -38,13 +36,11 @@ namespace Mango.Services.AuthAPI.Service
                 Name = user.Name,
                 PhoneNumber=user.PhoneNumber
             };
-
             LoginResponseDto loginResponseDto = new()
             {
                 User = userDto,
-                Token=""
+                Token = token
             };
-
             return loginResponseDto;
         }
 

@@ -38,6 +38,7 @@ namespace Mango.Services.AuthAPI.Controllers
                 _response.Message = "Username or Password is incorrect";
                 return BadRequest(_response);
             }
+            _response.Result = response;
             return Ok(_response);
         }
     }
